@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Blocks Explode</string>
+    <string name="formated_result">Tiros: %1$d\nTempo Total:%2.1f</string>
+    <string name="reset_game">Reiniciar Jogo</string>
+    <string name="winner">Voce Ganhou!</string>
+    <string name="loser">Voce Perdeu!</string>
+    <string name="time_remaining_formatted">Tempo restante: %1.f segundos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
