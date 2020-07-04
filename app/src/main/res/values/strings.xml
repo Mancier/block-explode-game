@@ -5,6 +5,4 @@
     <string name="winner">Voce Ganhou!</string>
     <string name="loser">Voce Perdeu!</string>
     <string name="time_remaining_formatted">Tempo restante: %1.f segundos</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

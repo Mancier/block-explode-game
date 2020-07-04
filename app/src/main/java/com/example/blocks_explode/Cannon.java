@@ -23,7 +23,7 @@ public class Cannon {
         align(Math.PI / 2);
     }
 
-    private void align(double barrelAngle) {
+    public void align(double barrelAngle) {
         this.barrelAngle = barrelAngle;
         barrelEnd.x = (int) (barrelLenght * Math.sin(barrelAngle));
         barrelEnd.y = (int) (-barrelLenght * Math.cos(barrelAngle)) + view.getScreenWidth() / 2;
