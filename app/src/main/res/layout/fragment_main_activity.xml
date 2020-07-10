@@ -8,12 +8,10 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
     <view
-        android:id="@+id/view"
-        class="com.example.blocks_explode.CannonView"
+        android:id="@+id/cannonView" class="com.example.blocks_explode.CannonView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

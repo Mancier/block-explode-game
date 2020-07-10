@@ -347,30 +347,6 @@ public class CannonView extends SurfaceView implements SurfaceHolder.Callback {
         for (GameElement target : targets) target.draw(canvas);
     }
 
-    public void testForCollision() {
-        if (cannon.getCannonball() != null && cannon.getCannonball().isOnScreen()){
-            for (int n = 0; n < targets.size(); n++){
-                if(cannon.getCannonball().collideWith(targets.get(n))){
-                    timeLeft += targets.get(n).getHitReward();
-                    cannon.removeCannonball();
-                    targets.remove(n);
-                    --n;
-
-                    break;
-                }
-            }
-        } else {
-            cannon.removeCannonball();
-        }
-
-        if(cannon.getCannonball() != null && cannon.getCannonball().collideWith(blocker)){
-            blocker.playSound();
-            cannon.getCannonball().reverseVelocityX();
-
-            timeLeft -= blocker.getMissPenalty();
-        }
-    }
-
     public void stopGame() {
         if (cannonThread != null) cannonThread.setRunning(false);
     }
@@ -397,5 +373,74 @@ public class CannonView extends SurfaceView implements SurfaceHolder.Callback {
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             );
+    }
+
+    public void testForCollisions() {
+        if (cannon.getCannonball() != null && cannon.getCannonball().isOnScreen()){
+            for (int n = 0; n < targets.size(); n++){
+                if(cannon.getCannonball().collideWith(targets.get(n))){
+                    timeLeft += targets.get(n).getHitReward();
+                    cannon.removeCannonball();
+                    targets.remove(n);
+                    --n;
+
+                    break;
+                }
+            }
+        } else {
+            cannon.removeCannonball();
+        }
+
+        if(cannon.getCannonball() != null && cannon.getCannonball().collideWith(blocker)){
+            blocker.playSound();
+            cannon.getCannonball().reverseVelocityX();
+
+            timeLeft -= blocker.getMissPenalty();
+        }
+    }
+
+    private class CannonThread extends Thread{
+        private SurfaceHolder surfaceHolder;
+        private long totalElapsedTime = 0;
+        private boolean isThreadsRunning = false;
+
+        public CannonThread(SurfaceHolder holder) {
+            surfaceHolder = holder;
+            setName("CannonThread");
+        }
+
+        public void setRunning(boolean running) {
+            isThreadsRunning = running;
+        }
+
+        @Override
+        public void run() {
+            Canvas canvas = null;
+            long previousFrameTime = System.currentTimeMillis();
+
+            while (isThreadsRunning){
+                try {
+                    canvas = surfaceHolder.lockCanvas(null);
+
+                    /**,
+                     * Something is wrong, I can fell.
+                     * Bimo, is a trap
+                     * TODO: See how do u import and use this functions without a constructor and abstraction
+                     */
+
+                    synchronized (surfaceHolder){
+                        long currentTime = System.currentTimeMillis();
+                        double elapsedTimeMS = currentTime - previousFrameTime;
+                        totalElapsedTime += elapsedTimeMS / 1000.0;
+                        updatePositions(elapsedTimeMS);
+                        testForCollisions();
+                        drawGameElements(canvas);
+                        previousFrameTime = currentTime;
+                    }
+                } finally {
+                    if (canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
+        }
     }
 }

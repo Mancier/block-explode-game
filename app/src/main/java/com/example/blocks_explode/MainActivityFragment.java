@@ -21,7 +21,7 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         getActivity().setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -36,6 +36,6 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cannonView.releaseResource();
+        cannonView.releaseResources();
     }
 }
